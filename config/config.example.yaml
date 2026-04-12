@@ -1,0 +1,43 @@
+version: 1
+
+# Override with MNEMO_BASE env var
+# primary: ~/.claude/memory
+
+# Optional: mirror writes to Obsidian vault (set your path or leave empty)
+# obsidian_vault: /path/to/your/ObsidianVault/Projects
+
+archive_threshold_days: 90
+delete_after_days: null
+max_active_files_per_project: 500
+
+quiet_hints: true
+max_hints_per_hour: 3
+briefing_max_lines: 15
+briefing_lookback_sessions: 2
+min_tag_overlap_for_hint: 2
+
+mid_session_saves: true
+decision_trigger_phrases:
+  - "decided to"
+  - "we'll use"
+  - "going with"
+  - "architecture decision"
+  - "key decision"
+  - "tradeoff"
+  - "important:"
+  - "note for next time"
+file_write_threshold: 3
+
+blocked_patterns:
+  - (?i)(password|secret|token|key|credential|api_key)\s*[=:]\s*\S+
+  - (?i)bearer\s+[A-Za-z0-9_\-\.]+
+  - (?i)-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----
+blocked_file_patterns:
+  - .env
+  - .pem
+  - credentials.json
+  - "*secret*"
+  - "*password*"
+
+# Optional: Obsidian canvas output path
+# canvas_output_path: /path/to/your/graph.canvas

@@ -1,0 +1,38 @@
+{
+  "name": "mnemo-hook",
+  "version": "1.0.0",
+  "description": "Persistent memory layer for Claude Code — session continuity through hooks",
+  "main": "src/session.js",
+  "scripts": {
+    "test": "node test/utils.test.js && node test/privacy.test.js && node test/recall.test.js && node test/graph-sync.test.js",
+    "test:utils": "node test/utils.test.js",
+    "test:privacy": "node test/privacy.test.js",
+    "test:recall": "node test/recall.test.js",
+    "test:graph": "node test/graph-sync.test.js",
+    "install-hooks": "node mnemo-install.js",
+    "uninstall-hooks": "node mnemo-install.js uninstall",
+    "check": "node -c src/utils.js && node -c src/privacy.js && node -c src/store.js && node -c src/recall.js && node -c src/graph-sync.js && node -c src/session.js && echo 'All modules OK'"
+  },
+  "keywords": [
+    "claude-code",
+    "hooks",
+    "memory",
+    "session-continuity",
+    "ai-agent",
+    "obsidian"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "src/",
+    "config/",
+    "mnemo-install.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
