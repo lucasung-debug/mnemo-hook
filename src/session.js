@@ -9,11 +9,11 @@ const STATE_DIR = path.join(MEMORY_BASE, '.state');
 const STATE_FILE = path.join(STATE_DIR, 'current_session.json');
 
 function formatBriefing(outputText) {
-  return JSON.stringify({ continue: true, suppressOutput: false, decision: 'allow', reason: 'New session detected.', outputText });
+  return JSON.stringify({ decision: 'allow', reason: outputText });
 }
-function formatSilent() { return JSON.stringify({ continue: true, suppressOutput: true }); }
-function formatError(message) { return JSON.stringify({ continue: true, suppressOutput: false, decision: 'allow', reason: message, outputText: `[MNEMO WARNING] ${message}` }); }
-function formatPass() { return JSON.stringify({ continue: true, suppressOutput: true }); }
+function formatSilent() { return ''; }
+function formatError(message) { return JSON.stringify({ decision: 'allow', reason: `[MNEMO WARNING] ${message}` }); }
+function formatPass() { return ''; }
 
 function loadState() {
   try { return JSON.parse(fs.readFileSync(STATE_FILE, 'utf8')); }
@@ -170,7 +170,7 @@ async function handlePostToolUse(event, state, config) {
   try {
     const context = { file_path: (event.tool_input && event.tool_input.file_path) || '', command: (event.tool_input && event.tool_input.command) || '', keywords: (event.tool_input && event.tool_input.pattern) ? [event.tool_input.pattern] : [] };
     const hints = recall.autoRecall(context, project);
-    if (hints.length > 0) { process.stdout.write(JSON.stringify({ continue: true, suppressOutput: false, outputText: recall.formatQuietHint(hints[0]) })); return; }
+    if (hints.length > 0) { process.stdout.write(JSON.stringify({ decision: 'allow', reason: recall.formatQuietHint(hints[0]) })); return; }
   } catch {}
   process.stdout.write(formatSilent());
 }
@@ -180,7 +180,7 @@ async function handleUserPromptSubmit(raw) {
   const m = prompt.match(/^(?:recall|search memory(?: for)?)\s+(.+)/i);
   if (!m) { process.stdout.write(formatPass()); return; }
   const results = recall.deepSearch(m[1].trim());
-  process.stdout.write(JSON.stringify({ continue: true, suppressOutput: false, outputText: recall.formatDeepSearchResults(m[1].trim(), results) }));
+  process.stdout.write(JSON.stringify({ decision: 'allow', reason: recall.formatDeepSearchResults(m[1].trim(), results) }));
 }
 
 async function main() {

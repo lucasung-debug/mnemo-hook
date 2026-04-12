@@ -4,7 +4,8 @@
   "description": "Persistent memory layer for Claude Code — session continuity through hooks",
   "main": "src/session.js",
   "scripts": {
-    "test": "node test/utils.test.js && node test/privacy.test.js && node test/recall.test.js && node test/graph-sync.test.js",
+    "test": "node test/utils.test.js && node test/privacy.test.js && node test/recall.test.js && node test/graph-sync.test.js && node test/session.test.js",
+    "test:session": "node test/session.test.js",
     "test:utils": "node test/utils.test.js",
     "test:privacy": "node test/privacy.test.js",
     "test:recall": "node test/recall.test.js",
