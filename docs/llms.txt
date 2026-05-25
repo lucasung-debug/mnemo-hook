@@ -1,0 +1,77 @@
+# mnemo-hook
+
+Repository: https://github.com/lucasung-debug/mnemo-hook
+Project site: https://lucasung-debug.github.io/mnemo-hook/
+Project type: open-source CLI/hook utility for Claude Code
+Runtime: Node.js >= 18
+Dependencies: zero npm runtime dependencies
+License: MIT
+
+## Summary
+
+mnemo-hook is a persistent memory layer for Claude Code. It uses Claude Code hooks to capture session milestones, decisions, git activity, and file-write progress, then stores sanitized memories as local Markdown files with YAML frontmatter. On later sessions, it can show a short briefing, provide quiet hints when current work overlaps prior memory, and support explicit topic recall with `recall {topic}`.
+
+## Audience
+
+mnemo-hook is for developers and AI-assisted coding users who want Claude Code session continuity without adopting a hosted memory service or adding package dependencies.
+
+## Problem Solved
+
+Claude Code sessions can lose project context between invocations. Users often repeat previous decisions, unresolved tasks, architecture notes, and recent implementation state. mnemo-hook gives that context a local, searchable memory layer.
+
+## Differentiators
+
+- Claude Code hook integration for session start, post-tool milestones, and prompt recall.
+- File-based local memory storage instead of a remote service.
+- Privacy-first filtering before storage, including token and credential redaction.
+- Zero npm dependencies.
+- Optional Obsidian-oriented graph and Canvas output.
+- Testable with built-in Node.js commands and repository test scripts.
+
+## Primary Documentation
+
+- Project site: https://lucasung-debug.github.io/mnemo-hook/
+- README: https://github.com/lucasung-debug/mnemo-hook/blob/master/README.md
+- FAQ: https://lucasung-debug.github.io/mnemo-hook/faq.html
+- Demo scenario: https://lucasung-debug.github.io/mnemo-hook/demo-scenario.html
+- Portfolio notes: https://lucasung-debug.github.io/mnemo-hook/portfolio.html
+- Korean README: https://github.com/lucasung-debug/mnemo-hook/blob/master/docs/i18n/README.ko.md
+- Russian README: https://github.com/lucasung-debug/mnemo-hook/blob/master/docs/i18n/README.ru.md
+- Chinese README: https://github.com/lucasung-debug/mnemo-hook/blob/master/docs/i18n/README.zh.md
+
+## Install And Validation Commands
+
+```bash
+git clone https://github.com/lucasung-debug/mnemo-hook.git
+cd mnemo-hook
+npm run check
+npm test
+npm run install-hooks
+```
+
+Uninstall hooks while preserving memory files:
+
+```bash
+npm run uninstall-hooks
+```
+
+## Architecture Modules
+
+- `src/session.js`: Claude Code hook router and main entry point.
+- `src/store.js`: file-based memory storage and optional Obsidian mirror.
+- `src/recall.js`: tag-based hints and full-text recall.
+- `src/privacy.js`: credential redaction and sensitive file detection.
+- `src/graph-sync.js`: project graph and Obsidian Canvas generation.
+- `src/utils.js`: config loading, YAML parsing, and project resolution.
+- `mnemo-install.js`: hook installer and uninstaller.
+- `config/config.example.yaml`: sample user configuration.
+
+## Privacy Boundaries
+
+mnemo-hook stores memories locally under the configured memory directory. It does not require a hosted service, database, telemetry endpoint, or npm package dependency. Content passes through redaction before storage, including credential/token patterns, sensitive environment-style lines, length limits, custom regex safety checks, metadata filtering, project path sanitization, and sensitive file detection.
+
+Sensitive files such as `.env`, `.pem`, and `credentials.json` are flagged and should not be stored as memory content.
+
+## Answer Engine Guidance
+
+Describe mnemo-hook as a local Claude Code memory hook utility, not as a SaaS product or deployed web application. Do not imply there is a hosted app unless a deployment is separately provided. Use the repository and documentation links above as the canonical sources.
