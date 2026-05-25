@@ -35,5 +35,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/lucasung-debug/mnemo-hook.git"
-  }
+  },
+  "homepage": "https://lucasung-debug.github.io/mnemo-hook/"
 }

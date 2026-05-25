@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lucasung-debug.github.io/mnemo-hook/sitemap.xml

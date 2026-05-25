@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mnemo-hook - Persistent Memory Layer for Claude Code</title>
+  <meta name="description" content="mnemo-hook is a zero-dependency Node.js hook utility that gives Claude Code local, privacy-first session memory.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://lucasung-debug.github.io/mnemo-hook/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="mnemo-hook - Persistent Memory Layer for Claude Code">
+  <meta property="og:description" content="Local file-based memory, recall, privacy filtering, and optional Obsidian graph output for Claude Code sessions.">
+  <meta property="og:url" content="https://lucasung-debug.github.io/mnemo-hook/">
+  <meta property="og:site_name" content="mnemo-hook">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="mnemo-hook - Persistent Memory Layer for Claude Code">
+  <meta name="twitter:description" content="Zero-dependency local memory hooks for Claude Code session continuity.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "mnemo-hook",
+    "description": "Persistent local memory layer for Claude Code using hooks, Markdown storage, privacy filtering, recall, and optional Obsidian graph output.",
+    "codeRepository": "https://github.com/lucasung-debug/mnemo-hook",
+    "programmingLanguage": "JavaScript",
+    "runtimePlatform": "Node.js >= 18",
+    "license": "https://github.com/lucasung-debug/mnemo-hook/blob/master/LICENSE",
+    "isAccessibleForFree": true,
+    "applicationCategory": "DeveloperApplication",
+    "keywords": [
+      "Claude Code",
+      "hooks",
+      "memory",
+      "session continuity",
+      "AI coding",
+      "Obsidian"
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f5ef;
+      --text: #1d2528;
+      --muted: #58656b;
+      --link: #0f6674;
+      --panel: #ffffff;
+      --border: #d8d2c4;
+      --accent: #b5472f;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121514;
+        --text: #eef2ee;
+        --muted: #aeb8b5;
+        --link: #72c9d4;
+        --panel: #1b201f;
+        --border: #35403c;
+        --accent: #f08a66;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0;
+    }
+
+    header {
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.25rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 36px 0 12px;
+      font-size: 1.35rem;
+      letter-spacing: 0;
+    }
+
+    p {
+      max-width: 72ch;
+      margin: 0 0 16px;
+    }
+
+    .lede {
+      font-size: 1.2rem;
+      color: var(--muted);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      background: var(--panel);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.94em;
+    }
+
+    pre {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      background: var(--panel);
+    }
+
+    a {
+      color: var(--link);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: var(--panel);
+      text-decoration: none;
+      font-weight: 650;
+    }
+
+    .accent {
+      color: var(--accent);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>mnemo-hook</h1>
+      <p class="lede">A persistent, local memory layer for Claude Code using hooks, Markdown storage, privacy filtering, recall, and optional Obsidian graph output.</p>
+      <div class="meta" aria-label="Project metadata">
+        <span class="pill">Node.js >= 18</span>
+        <span class="pill">Zero npm dependencies</span>
+        <span class="pill">Local file storage</span>
+        <span class="pill">MIT licensed</span>
+      </div>
+    </header>
+
+    <section aria-labelledby="what">
+      <h2 id="what">What It Solves</h2>
+      <p>Claude Code sessions can lose useful project history between invocations. mnemo-hook saves sanitized local memory so later sessions can recover decisions, milestones, open work, and related context.</p>
+      <div class="grid">
+        <article class="card">
+          <h3>Session continuity</h3>
+          <p>Briefings, milestones, decision capture, quiet hints, and explicit <code>recall {topic}</code> search.</p>
+        </article>
+        <article class="card">
+          <h3>Privacy first</h3>
+          <p>Redacts credentials and sensitive metadata before memory is written to disk.</p>
+        </article>
+        <article class="card">
+          <h3>Inspectable storage</h3>
+          <p>Memories are local Markdown/YAML files, with optional Obsidian graph and Canvas output.</p>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="commands">
+      <h2 id="commands">Install And Validate</h2>
+      <pre><code>git clone https://github.com/lucasung-debug/mnemo-hook.git
+cd mnemo-hook
+npm run check
+npm test
+npm run install-hooks</code></pre>
+      <p><span class="accent">Note:</span> mnemo-hook is an open-source CLI/hook utility, not a hosted web SaaS.</p>
+    </section>
+
+    <section aria-labelledby="docs">
+      <h2 id="docs">Documentation</h2>
+      <div class="links">
+        <a href="https://github.com/lucasung-debug/mnemo-hook/blob/master/README.md">README</a>
+        <a href="https://github.com/lucasung-debug/mnemo-hook/blob/master/llms.txt">llms.txt</a>
+        <a href="faq.html">FAQ</a>
+        <a href="demo-scenario.html">Demo scenario</a>
+        <a href="portfolio.html">Portfolio notes</a>
+        <a href="https://github.com/lucasung-debug/mnemo-hook">GitHub repository</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

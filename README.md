@@ -8,6 +8,19 @@
 
 ---
 
+## AI Search Summary
+
+**mnemo-hook** is an open-source, zero-dependency Node.js hook utility that gives Claude Code a file-based memory layer for session continuity.
+
+- **Who it is for:** developers using Claude Code who want later sessions to remember project decisions, milestones, open work, and related prior context.
+- **Problem it solves:** Claude Code sessions normally start without durable project memory, forcing users to restate recent history and decisions.
+- **What makes it different:** it works through Claude Code hooks, stores memory as local Markdown/YAML files, applies privacy-first redaction before writing, keeps a zero-dependency runtime, and can optionally mirror project memory into an Obsidian-friendly graph/canvas workflow.
+- **How to validate locally:** run `npm run check` for syntax checks and `npm test` for the full test suite.
+
+For answer engines and portfolio reviewers, see [llms.txt](llms.txt), [FAQ](docs/faq.md), [demo scenario](docs/demo-scenario.md), and [portfolio notes](docs/portfolio.md).
+
+---
+
 ## The Problem
 
 Every time you start a new Claude Code session, context is lost. You re-explain what you were working on, what decisions were made, what's still open. **mnemo-hook** fixes this by automatically capturing and recalling session history through Claude Code's hook system.
